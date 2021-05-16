@@ -1,0 +1,12 @@
+.emisor
+{
+    color: red;
+    font-weight: bold;
+}
+
+.receptor
+{
+    color: green;
+    margin-left: 70px;
+    font-weight: bold;
+}

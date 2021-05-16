@@ -1,0 +1,59 @@
+body {    
+    background-color: bisque;      
+}
+
+*{
+    font-size: 9pt;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+ #ficheroXML {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);    
+}
+
+.table {
+    font-family: sans-serif;
+    display: table;
+    border-spacing: 10px;
+    border: black 1px solid;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    background-color: white;
+    text-align: center; 
+} 
+
+.tc {
+    display: table-caption;
+    text-align: center;
+    background-color: #DDDDDD;
+    font-size: 150%;
+    text-align: center;
+    margin-bottom: 5px;
+} 
+
+.tr {
+    display: table-row;
+    border: 3px black;
+}
+
+.th{
+    display: table-cell;
+    border: 3px black;
+    font-weight: bold;
+    background-color:khaki;
+}
+
+.td{
+    display: table-cell;
+}
+
+.tdMenor{
+    display: table-cell;
+    background-color: seagreen;
+}
+
