@@ -25,13 +25,13 @@ function gestionarFicheroTXT(txt){
     }          
 }
 
+
 function leerLinea(linea,i){   
     if (i%2==0) //emisor
-        document.getElementById("ficheroTXT").innerHTML += "<p class='emisor'>" + linea + "</p>";
+        document.getElementById("ficheroTXT").innerHTML += "<div class='emisor'>" + linea + "</div>";
     else //receptor
-        document.getElementById("ficheroTXT").innerHTML += "<p class='receptor'>" + linea + "</p>";
+        document.getElementById("ficheroTXT").innerHTML += "<div class='receptor'>" + linea + "</div>";
 }
-
 
 
 
