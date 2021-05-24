@@ -1,41 +1,48 @@
-`use strict`
+let contador = 0;
 
-window.onload = function () {
-    loadLDocA();
-}
-
-function loadLDocA() {
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            gestionarFicheroTXT(this);
+function loadDocA(fichero, tipo) {
+    let http = new XMLHttpRequest();
+    http.open("GET", fichero, true);
+    http.send();
+    http.addEventListener('load', (event) => {
+        if (http.status === 200) {
+            if (tipo == "xml") {
+                gestionarFicheroXML(http.responseXML)
+            }
+            else
+                gestionarFicheroTXT(http.responseText)
         }
-    };
-    xhr.open("GET", "./txt/texto.txt", true);
-    xhr.send();
+    })
 }
 
-function gestionarFicheroTXT(txt){
+function gestionarFicheroTXT(txt) {
+    let lineas = txt.split("\n");
+    let mensajes = document.getElementById("ficheroTXT");
 
-    let docTXT = txt.responseText;
-    let lineas = docTXT.split("\n");
+    for (let i = contador; i < lineas.length; i++) {
         
-    for(let i = 0; i < lineas.length; i++){
-        myVar = setTimeout(leerLinea, i*10000, lineas[i],i);
-    }          
+        let nombre = lineas[i].split("$$%%@@")[0];
+        let texto = lineas[i].split("$$%%@@")[1];
+
+        if(nombre == "Emisor")
+        {
+            let emisor = document.createElement("div");
+            emisor.classList.add("emisor");
+            mensajes.appendChild(emisor);
+            emisor.textContent = texto;
+        }
+        else
+        {
+            let receptor = document.createElement("div");
+            receptor.classList.add("receptor");
+            mensajes.appendChild(receptor);
+            receptor.textContent = texto;
+        }
+        contador++;
+    }
 }
 
-
-function leerLinea(linea,i){   
-    if (i%2==0) //emisor
-        document.getElementById("ficheroTXT").innerHTML += "<div class='emisor'>" + linea + "</div>";
-    else //receptor
-        document.getElementById("ficheroTXT").innerHTML += "<div class='receptor'>" + linea + "</div>";
+function load() {
+    setInterval(loadDocA, 10000, "texto.txt", "txt");
 }
-
-
-
-
-
-
-
+window.onload = load;
