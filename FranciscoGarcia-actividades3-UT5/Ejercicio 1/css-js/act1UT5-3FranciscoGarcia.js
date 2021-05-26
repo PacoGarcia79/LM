@@ -1,6 +1,7 @@
 `use strict`
 
-window.onload = loadDocA("./xml/libros.xml", "xml");
+window.onload = loadDocA("./xml/libros copy.xml", "xml");
+
 
 function loadDocA(fichero, tipo) {
     let http = new XMLHttpRequest();
@@ -8,7 +9,7 @@ function loadDocA(fichero, tipo) {
     http.send();
     http.addEventListener('load', (event) => {
         if (http.status === 200) {
-            if (tipo == "xml") {
+            if (tipo == "xml") {                
                 gestionarFicheroXML(http.responseXML)
             }
             else
@@ -41,55 +42,55 @@ function AñadeEncabezado(elemento) {
 }
 
 function gestionarFicheroXML(docXML) {
-
-    let minimos = precioMenor(docXML);;
+  
     let divCelda = "";
     let padre = document.getElementById("ficheroXML");
+    let librerias = docXML.getElementsByTagName("libreria");
 
-    for (let i = 0; i < docXML.getElementsByTagName("libreria").length; i++) {
+    for (let i = 0; i < librerias.length; i++) {
         let libreria = AñadeElemento(padre, "div", "libreria", "");
         let tabla = AñadeElemento(libreria, "div", "tabla", "");
-        let nombreLibreria = docXML.getElementsByTagName("libreria")[i].getElementsByTagName("nombre")[0].textContent;
+        let nombreLibreria = librerias[i].getElementsByTagName("nombre")[0].textContent;
         AñadeElemento(tabla, "div", "caption", nombreLibreria);
 
         AñadeEncabezado(tabla);
 
-        for (let j = 0; j < docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro").length; j++) {
-            if (minimos[i] == Number(docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("precio")[0].textContent))
+        let libros = librerias[i].getElementsByTagName("libro");
+        let minimo = precioMenor(libros);
+
+        for (let j = 0; j < libros.length; j++) {
+            if (minimo == Number(libros[j].getElementsByTagName("precio")[0].textContent))
                 divCelda = "celdaMenor";
             else
                 divCelda = "celda";
             
             let fila = AñadeElemento(tabla, "div", "fila", "");
-            AñadeElemento(fila, "div", divCelda, docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("ISBN")[0].textContent);
-            AñadeElemento(fila, "div", divCelda, docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("titulo")[0].textContent);
-            AñadeElemento(fila, "div", divCelda, docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("nivelProfundidad")[0].textContent);
-            AñadeElemento(fila, "div", divCelda, docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("autor")[0].textContent);
-            AñadeElemento(fila, "div", divCelda, docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("editorial")[0].textContent);
-            AñadeElemento(fila, "div", divCelda, docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("fechaPublicacion")[0].textContent);
-            AñadeElemento(fila, "div", divCelda, docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("paginaWeb")[0].textContent);
-            AñadeElemento(fila, "div", divCelda, docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("precio")[0].textContent);
+            AñadeElemento(fila, "div", divCelda, libros[j].getElementsByTagName("ISBN")[0].textContent);
+            AñadeElemento(fila, "div", divCelda, libros[j].getElementsByTagName("titulo")[0].textContent);
+            AñadeElemento(fila, "div", divCelda, libros[j].getElementsByTagName("nivelProfundidad")[0].textContent);
+            AñadeElemento(fila, "div", divCelda, libros[j].getElementsByTagName("autor")[0].textContent);
+            AñadeElemento(fila, "div", divCelda, libros[j].getElementsByTagName("editorial")[0].textContent);
+            AñadeElemento(fila, "div", divCelda, libros[j].getElementsByTagName("fechaPublicacion")[0].textContent);
+            AñadeElemento(fila, "div", divCelda, libros[j].getElementsByTagName("paginaWeb")[0].textContent);
+            AñadeElemento(fila, "div", divCelda, libros[j].getElementsByTagName("precio")[0].textContent);
         }
     }
 }
 
-function precioMenor(docXML) {
+function precioMenor(libros) {
     let minimo;
-    let minimos = new Array();
 
-    for (let i = 0; i < docXML.getElementsByTagName("libreria").length; i++) {
-        for (let j = 0; j < docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro").length; j++) {
+        for (let j = 0; j < libros.length; j++) {
             if (j == 0)
-                minimo = Number(docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("precio")[0].textContent);
+                minimo = Number(libros[j].getElementsByTagName("precio")[0].textContent);
             else {
-                let valor = Number(docXML.getElementsByTagName("libreria")[i].getElementsByTagName("libro")[j].getElementsByTagName("precio")[0].textContent);
+                let valor = Number(libros[j].getElementsByTagName("precio")[0].textContent);
 
                 if (minimo > valor) {
                     minimo = valor;
                 }
             }
         }
-        minimos.push(minimo);
-    }
-    return minimos;
+    
+    return minimo;
 }
