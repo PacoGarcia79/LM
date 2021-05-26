@@ -15,7 +15,7 @@ body {
     transform: translate(-50%, -50%);    
 }
 
-.table {
+.tabla {
     font-family: sans-serif;
     display: table;
     border-spacing: 10px;
@@ -27,7 +27,7 @@ body {
     text-align: center; 
 } 
 
-.tc {
+.caption {
     display: table-caption;
     text-align: center;
     background-color: #DDDDDD;
@@ -36,23 +36,28 @@ body {
     margin-bottom: 5px;
 } 
 
-.tr {
+.fila {
     display: table-row;
     border: 3px black;
 }
 
-.th{
+.encabezado {
+    display: table-row;
+    border: 3px black;
+}
+
+.filaEncabezado{
     display: table-cell;
     border: 3px black;
     font-weight: bold;
     background-color:khaki;
 }
 
-.td{
+.celda{
     display: table-cell;
 }
 
-.tdMenor{
+.celdaMenor{
     display: table-cell;
     background-color: seagreen;
 }
